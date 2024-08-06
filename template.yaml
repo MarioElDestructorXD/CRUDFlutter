@@ -26,6 +26,71 @@ Resources:
             Path: /hello
             Method: get
 
+  CreateAutoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: create_auto/
+      Handler: app.lambda_handler
+      Runtime: python3.12
+      Architectures:
+        - x86_64
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: Vehiculos
+      Events:
+        CreateAutoApi:
+          Type: Api
+          Properties:
+            Path: /autos
+            Method: post
+
+  GetItemsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.lambda_handler
+      Runtime: python3.12
+      CodeUri: get_auto/
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: Vehiculos
+      Events:
+        GetItemsApi:
+          Type: Api
+          Properties:
+            Path: /autos
+            Method: get
+
+  UpdateItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.lambda_handler
+      Runtime: python3.12
+      CodeUri: update_auto/
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: Vehiculos
+      Events:
+        UpdateItemApi:
+          Type: Api
+          Properties:
+            Path: /autos/{id}
+            Method: put
+
+  DeleteItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.lambda_handler
+      Runtime: python3.12
+      CodeUri: delete_auto/
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: Vehiculos
+      Events:
+        DeleteItemApi:
+          Type: Api
+          Properties:
+            Path: /autos/{id}
+            Method: delete
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
